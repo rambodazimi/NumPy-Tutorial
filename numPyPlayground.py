@@ -131,7 +131,6 @@ print()
 
 # Now let's talk a bit about linear Algebra using linalg
 
-# Matrix multiplication
 matrix1 = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
 matrix2 = np.array([[-1, 2, 0], [4, 0, 1], [1, -2, 0]])
 
@@ -146,4 +145,34 @@ print("Inverse of [1 2 ; 3 4]:\n", np.linalg.inv([[1, 2], [3, 4]]))
 print("Identity matrix of size 3:\n", np.identity(3))
 print()
 
-# Finally, let's talk about some statistics
+# Now, let's talk about some statistics
+stats = np.array([[1, 2, 3], [4, 5, 6]])
+print("stats array:\n", stats)
+print("Sum of stats is:", np.sum(stats)) # should be 21
+print("Reshapig stats:\n", stats.reshape(3,2))
+
+# vertical and horizontal stacks
+v1 = np.array([1, 2, 3])
+v2 = np.array([4, 5, 6])
+print("vertical stack:\n", np.vstack([v1, v2, v2, v1]))
+print("horizontal stack:\n", np.hstack([v1, v2, v2, v1]))
+print()
+
+# Finally, let's talk about files
+"""
+Many times, we want to work on big amount of data in a file (i.e. a CSV file or a simple text file)
+numpy helps us do som mathematical operations on the data and generate the result
+"""
+
+file = np.genfromtxt('data.txt', delimiter=',') # open a file named data.txt, and tokenize it with ','
+print("file:\n", file)
+
+# it's float64 by default. let's change it to int32
+file = file.astype('int32')
+print("file (int version):\n", file)
+
+# we can use many other built-in methods in numpy to do some mathematical operations on the data in the data.txt file or any other file
+
+# For more detail on numpy library in python, visit the both sites below (GitHub page of numpy open source library and the numpy official documentation)
+# https://github.com/numpy/numpy
+# https://numpy.org/doc/
