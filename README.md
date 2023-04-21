@@ -1,7 +1,7 @@
 # NumPy-Tutorial
 NumPy Tutorial in python from 0 to 100
 
-List of topics covered in the tutorial:
+### List of topics covered in the tutorial:
 Comparing lists with numpy
 
 Built-in mathematical methods in numpy (max, min, mean, std, var, abs, sum, size, dot, sort, ...)
