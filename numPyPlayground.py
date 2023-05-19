@@ -14,6 +14,7 @@ ndarray (N-dimensional arrays). We can plot figures, do some backends, and write
 
 # importing the numpy library to our source code so that we can use the methods in it in our program
 import numpy as np # name it as "np" for simplicity
+import time # to compare the numpy performance with other methods in terms of time
 
 print("Welcome to NumPy tutorial!")
 print("Author: Rambod Azimi")
@@ -55,11 +56,35 @@ print()
 my_array = np.array([5, 4, 3, 2, 1])
 my_array2 = np.array([1, 2, 3, 4, 5])
 
+my_array3 = np.arange(10) # a list from 0 to 9
+
 # printing the arrays
 print("First array created using Numpy array():", my_array)
 print("Second array created using Numpy array():", my_array2)
+print("Third array created using Numpy array():", my_array3)
 
-# Multiplying 2 arrays together (not possible in a regular list)
+
+# accessing an indexs of an array (or vector) is simple. Note that the index starts from 0 to n-1
+print(f"my_array3[3] = {my_array3[3]}")
+print(f"my_array3[-1] = {my_array3[-1]}") # negative indices count from the end
+
+try:
+    temp = my_array3[20] # error! we can't access the 21st element of a vector of size 10!
+except Exception as e:
+    print("Index Out of bound!")
+
+
+# slicing (start:stop:step)
+print(f"my_array3[2:6:1] = {my_array3[2:6:1]}") # start from index 2 and go til step 6 (excluded) with the step size of 1
+print(f"my_array3[2:6:1] = {my_array3[2:6:2]}") # start from index 2 and go til step 6 (excluded) with the step size of 2
+print(f"my_array3[2:] = {my_array3[2:]}") # print index 2 and above
+print(f"my_array3[:2] = {my_array3[:2]}") # print elements below index 2
+print(f"my_array3[:] = {my_array3[:]}") # print all elements
+
+
+print(f"my_array + my_array2 = {my_array + my_array2}") # component by component (vectors must be of the same size)
+
+# Multiplying 2 arrays together (not possible in a regular list) --> component by component
 print("Multiplying 2 arrays together:", my_array * my_array2)
 
 # creating an array of arrays (2d array)
@@ -158,11 +183,50 @@ print("vertical stack:\n", np.vstack([v1, v2, v2, v1]))
 print("horizontal stack:\n", np.hstack([v1, v2, v2, v1]))
 print()
 
+
+# implementation of dot product
+# please note that numpy library already has built-in dot() function, but just for understanding the concepts better, we can implement another version of it here
+def my_dot (v1, v2):
+    n = v1.shape[0] # size of vector
+    result = 0
+    for i in range(n):
+        result += (v1[i] * v2[i])
+
+    return result
+
+# testing the function my_dot()
+a = np.array([1, 2, 3])
+b = np.array([1, 2, 2])
+r = my_dot(a, b)
+print(f"my_dot(a, b) = {r}")
+
+
+# now, let's compare the time it takes to generate the result for both built-in dot() in numpy and our my_dot() implementation
+np.random.seed(1)
+a = np.random.rand(10000000)
+b = np.random.rand(10000000)
+
+tic = time.time() # start time
+c1 = np.dot(a, b)
+toc = time.time() # end time
+
+print(f"Using the built-in dot() function in NumPy library took {(toc-tic)*1000:.4f}ms to compute.")
+
+tic = time.time()
+c2 = my_dot(a, b)
+toc = time.time()
+
+print(f"Using the my_dot() function took {(toc-tic)*1000:.4f}ms to compute.")
+
+# This huge difference is because the built-in dot() function uses parallel computation and also utilizes GPU to compute the dot product much faster than the implemented one
+
+
 # Finally, let's talk about files
 """
 Many times, we want to work on big amount of data in a file (i.e. a CSV file or a simple text file)
 numpy helps us do som mathematical operations on the data and generate the result
-"""
+
+You can uncomment the following lines of code to see it in action
 
 file = np.genfromtxt('data.txt', delimiter=',') # open a file named data.txt, and tokenize it with ','
 print("file:\n", file)
@@ -172,7 +236,11 @@ file = file.astype('int32')
 print("file (int version):\n", file)
 
 # we can use many other built-in methods in numpy to do some mathematical operations on the data in the data.txt file or any other file
+"""
+
+print("Program ended!")
 
 # For more detail on numpy library in python, visit the both sites below (GitHub page of numpy open source library and the numpy official documentation)
 # https://github.com/numpy/numpy
 # https://numpy.org/doc/
+# http://rambodazimi.com
